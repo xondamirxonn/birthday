@@ -406,68 +406,7 @@ body, html {
   transform: translateY(-10px);
 }
 
-/* Developer Toggle Panel */
-.developer-panel {
-  position: absolute;
-  bottom: 1.5rem;
-  right: 1.5rem;
-  z-index: 10;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 0.25rem;
-}
 
-.dev-label {
-  font-family: var(--font-sans);
-  font-size: 0.6rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  color: var(--color-gold-muted);
-  opacity: 0.4;
-}
-
-.dev-toggle-btn {
-  background: rgba(7, 12, 27, 0.6);
-  border: 1px solid rgba(212, 175, 55, 0.25);
-  border-radius: 30px;
-  padding: 0.5rem 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  cursor: pointer;
-  outline: none;
-  transition: all 0.3s ease;
-}
-
-.dev-toggle-btn:hover {
-  background: rgba(212, 175, 55, 0.1);
-  border-color: var(--color-gold-muted);
-  box-shadow: 0 0 10px rgba(212, 175, 55, 0.15);
-}
-
-.toggle-pill {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background-color: var(--color-gold-muted);
-  box-shadow: 0 0 4px var(--color-gold-bright);
-  transition: all 0.4s ease;
-}
-
-.dev-toggle-btn.unlocked .toggle-pill {
-  background-color: #00ff66;
-  box-shadow: 0 0 8px #00ff66;
-}
-
-.toggle-text {
-  font-family: var(--font-sans);
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  color: var(--color-text-light);
-  text-transform: uppercase;
-}
 
 /* Keyframe Animations */
 @keyframes pulse-divider {

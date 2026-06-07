@@ -16,7 +16,6 @@ const unlockedContent = document.getElementById('unlocked-content');
 const flashOverlay = document.getElementById('flash-overlay');
 const chestContainer = document.getElementById('chest-container');
 const chestSvg = document.getElementById('chest-svg');
-const devStateToggle = document.getElementById('dev-state-toggle');
 
 // Timer DOM Elements
 const timerDays = document.querySelector('#unit-days .timer-val');
@@ -437,10 +436,6 @@ function lockSystem() {
   particleState = 'ambient';
   particles = [];
 
-  // UI classes
-  devStateToggle.classList.remove('unlocked');
-  devStateToggle.querySelector('.toggle-text').textContent = 'Preview Unlocked';
-
   unlockedContent.classList.remove('visible');
   unlockedView.classList.remove('active');
   chestSvg.classList.remove('opened');
@@ -481,10 +476,6 @@ function unlockSystem() {
     }, 300);
 
   }, 1200); // matches the CSS transition length
-
-  // Update dev toggle classes
-  devStateToggle.classList.add('unlocked');
-  devStateToggle.querySelector('.toggle-text').textContent = 'Preview Locked';
 }
 
 // --- Chest Interaction ---
@@ -500,15 +491,6 @@ chestContainer.addEventListener('click', () => {
   setTimeout(() => {
     triggerChestExplosion();
   }, 400); // delay briefly as lid begins to rotate open
-});
-
-// --- Developer Preview Toggle ---
-devStateToggle.addEventListener('click', () => {
-  if (isUnlockedState) {
-    lockSystem();
-  } else {
-    unlockSystem();
-  }
 });
 
 // Window resize updates points configuration
