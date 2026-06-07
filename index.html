@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Time Capsule</title>
+  <!-- SEO & Description -->
+  <meta name="description" content="A cinematic time capsule locked until June 14. Discover a story hidden in time.">
+  <!-- Premium Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700;900&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=1.0.4">
+</head>
+<body>
+  <!-- Cinematic Canvas for Stars, Nebulae, and Glowing Particles -->
+  <canvas id="sky-canvas"></canvas>
+
+  <!-- Ambient Cinematic Atmosphere Overlays -->
+  <div class="sky-overlay nebula-gold"></div>
+  <div class="sky-overlay nebula-blue"></div>
+  <div class="sky-overlay vignette"></div>
+
+  <!-- Screen transition overlays -->
+  <div id="flash-overlay"></div>
+
+  <div id="app-container">
+    <!-- 1. COUNTDOWN STATE (Locked) -->
+    <section id="countdown-view" class="view-section active">
+      <div class="atmosphere-text-container">
+        <h2 class="sub-title text-reveal">A story hidden in time</h2>
+      </div>
+
+      <div class="glass-countdown-card">
+        <div class="timer-unit" id="unit-days">
+          <span class="timer-val">00</span>
+          <span class="timer-label">DAYS</span>
+        </div>
+        <div class="timer-divider">:</div>
+        <div class="timer-unit" id="unit-hours">
+          <span class="timer-val">00</span>
+          <span class="timer-label">HOURS</span>
+        </div>
+        <div class="timer-divider">:</div>
+        <div class="timer-unit" id="unit-minutes">
+          <span class="timer-val">00</span>
+          <span class="timer-label">MINUTES</span>
+        </div>
+        <div class="timer-divider">:</div>
+        <div class="timer-unit" id="unit-seconds">
+          <span class="timer-val">00</span>
+          <span class="timer-label">SECONDS</span>
+        </div>
+      </div>
+
+      <div class="atmosphere-text-container">
+        <p class="bottom-quote text-reveal">Every second brings June 14 closer.</p>
+      </div>
+    </section>
+
+    <!-- 2. UNLOCKED STATE (June 14) -->
+    <section id="unlocked-view" class="view-section">
+      <!-- Magical Glowing Content after chest opens -->
+      <div id="unlocked-content" class="hidden">
+        <div class="majestic-reveal">
+          <h2 class="cinematic-serif-heading">Nineteen years of memories.</h2>
+          <p class="cinematic-quote">And the best chapters may still be ahead.</p>
+        </div>
+      </div>
+
+      <!-- Mysterious Interactive Chest Container -->
+      <div id="chest-container">
+        <div class="chest-glow-ring"></div>
+        <div class="chest-instruction">Click to open the capsule</div>
+        
+        <!-- Premium SVG Treasure Chest -->
+        <svg id="chest-svg" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <!-- Gold Metallic Gradient -->
+            <linearGradient id="gold-metal" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#aa7c11" />
+              <stop offset="20%" stop-color="#ffd700" />
+              <stop offset="40%" stop-color="#fff5b3" />
+              <stop offset="60%" stop-color="#ffd700" />
+              <stop offset="80%" stop-color="#d4af37" />
+              <stop offset="100%" stop-color="#5a450c" />
+            </linearGradient>
+            
+            <!-- Dark Wood Gradient -->
+            <linearGradient id="dark-wood" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#1f1810" />
+              <stop offset="50%" stop-color="#120e09" />
+              <stop offset="100%" stop-color="#0a0805" />
+            </linearGradient>
+
+            <linearGradient id="lid-wood" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#18120c" />
+              <stop offset="25%" stop-color="#2c2014" />
+              <stop offset="50%" stop-color="#1f1810" />
+              <stop offset="75%" stop-color="#2c2014" />
+              <stop offset="100%" stop-color="#18120c" />
+            </linearGradient>
+
+            <linearGradient id="inner-glow-grad" x1="0%" y1="100%" x2="0%" y2="0%">
+              <stop offset="0%" stop-color="#ffd700" stop-opacity="1" />
+              <stop offset="40%" stop-color="#ff8c00" stop-opacity="0.8" />
+              <stop offset="75%" stop-color="#ff4500" stop-opacity="0.3" />
+              <stop offset="100%" stop-color="#ff0000" stop-opacity="0" />
+            </linearGradient>
+
+            <!-- Drop Shadows -->
+            <filter id="chest-shadow" x="-10%" y="-10%" width="120%" height="120%">
+              <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.8" />
+            </filter>
+            
+            <filter id="intense-glow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="15" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+
+          <!-- Chest Group -->
+          <g filter="url(#chest-shadow)" id="entire-chest">
+            <!-- Behind Chest Ambient Inner Glow (Revealed when open) -->
+            <ellipse id="bg-glow" cx="200" cy="180" rx="90" ry="60" fill="url(#inner-glow-grad)" class="lid-dependent-glow" />
+
+            <!-- Sparkling/Glowing light source inside chest (rendered behind base and lid layers) -->
+            <circle id="chest-core-glow" cx="200" cy="160" r="50" fill="#fff5b3" opacity="0" filter="url(#intense-glow)" />
+
+            <!-- CHEST BODY BASE (Static) -->
+            <g id="chest-base">
+              <!-- Wooden body of the chest base -->
+              <path d="M 90,160 L 310,160 A 10,10 0 0 1 320,170 L 310,240 A 15,15 0 0 1 295,255 L 105,255 A 15,15 0 0 1 90,240 L 80,170 A 10,10 0 0 1 90,160 Z" fill="url(#dark-wood)" stroke="#050505" stroke-width="2" />
+              
+              <!-- Wooden Panels (planks texture) -->
+              <path d="M 140,160 L 145,255 M 200,160 L 200,255 M 260,160 L 255,255" stroke="#0f0b07" stroke-width="2.5" opacity="0.6" />
+              
+              <!-- Left and Right Metal Corners/Borders -->
+              <path d="M 80,170 L 90,160 L 105,160 L 100,255 L 105,255 A 15,15 0 0 1 90,240 Z" fill="url(#gold-metal)" />
+              <path d="M 320,170 L 310,160 L 295,160 L 300,255 L 295,255 A 15,15 0 0 0 310,240 Z" fill="url(#gold-metal)" />
+              
+              <!-- Bottom Rim Gold Trim -->
+              <path d="M 103,248 L 297,248 A 10,10 0 0 1 303,255 L 97,255 A 10,10 0 0 1 103,248 Z" fill="url(#gold-metal)" />
+              
+              <!-- Gold Rivets on Base Borders -->
+              <circle cx="95" cy="170" r="2.5" fill="#fff" opacity="0.3" /><circle cx="95" cy="170" r="1.5" fill="#3a2704" />
+              <circle cx="97" cy="210" r="2.5" fill="#fff" opacity="0.3" /><circle cx="97" cy="210" r="1.5" fill="#3a2704" />
+              <circle cx="100" cy="245" r="2.5" fill="#fff" opacity="0.3" /><circle cx="100" cy="245" r="1.5" fill="#3a2704" />
+              <circle cx="305" cy="170" r="2.5" fill="#fff" opacity="0.3" /><circle cx="305" cy="170" r="1.5" fill="#3a2704" />
+              <circle cx="303" cy="210" r="2.5" fill="#fff" opacity="0.3" /><circle cx="303" cy="210" r="1.5" fill="#3a2704" />
+              <circle cx="300" cy="245" r="2.5" fill="#fff" opacity="0.3" /><circle cx="300" cy="245" r="1.5" fill="#3a2704" />
+
+              <!-- Keyhole Plate / Lock Catch (lower part) -->
+              <rect x="185" y="160" width="30" height="40" rx="3" fill="url(#gold-metal)" stroke="#4a370e" stroke-width="1" />
+              <circle cx="200" cy="175" r="5" fill="#111" />
+              <path d="M 197,175 L 203,175 L 205,190 L 195,190 Z" fill="#111" />
+            </g>
+
+            <!-- CHEST LID (Animatable) -->
+            <g id="chest-lid">
+              <!-- Inner Shadow of Lid when closed/partially open -->
+              <path d="M 80,161 Q 80,100 200,100 Q 320,100 320,161 Z" fill="url(#lid-wood)" stroke="#050505" stroke-width="2" />
+              
+              <!-- Vertical Planks Textures on Lid -->
+              <path d="M 130,160 Q 133,105 200,100 Q 267,105 270,160" stroke="#0f0b07" stroke-width="2.5" fill="none" opacity="0.5" />
+              <path d="M 160,160 Q 163,102 200,100 Q 237,102 240,160" stroke="#0f0b07" stroke-width="2" fill="none" opacity="0.5" />
+
+              <!-- Left and Right Metal Bands on Lid -->
+              <path d="M 80,161 Q 80,100 200,100 Q 200,100 200,100 L 200,100 Q 80,100 95,161 Z" fill="url(#gold-metal)" opacity="0.25" />
+              <!-- Real Metal Bands: Left side -->
+              <path d="M 90,161 Q 90,103 120,106 L 125,107 Q 100,106 100,161 Z" fill="url(#gold-metal)" />
+              <!-- Real Metal Bands: Right side -->
+              <path d="M 310,161 Q 310,103 280,106 L 275,107 Q 300,106 300,161 Z" fill="url(#gold-metal)" />
+
+              <!-- Golden Lid Handle / Trim -->
+              <path d="M 80,154 Q 200,152 320,154 L 320,161 Q 200,159 80,161 Z" fill="url(#gold-metal)" />
+              
+              <!-- Front Lock Flange (upper part that overlaps the keyhole plate) -->
+              <path d="M 188,150 L 212,150 L 208,175 L 192,175 Z" fill="url(#gold-metal)" stroke="#4a370e" stroke-width="1" id="chest-latch" />
+              <circle cx="200" cy="165" r="3" fill="#3a2704" />
+              
+              <!-- Decorative Rivets on Lid Bands -->
+              <circle cx="94" cy="155" r="1.5" fill="#3a2704" /><circle cx="94" cy="155" r="2.2" fill="#fff" opacity="0.2" />
+              <circle cx="92" cy="130" r="1.5" fill="#3a2704" /><circle cx="92" cy="130" r="2.2" fill="#fff" opacity="0.2" />
+              <circle cx="103" cy="113" r="1.5" fill="#3a2704" /><circle cx="103" cy="113" r="2.2" fill="#fff" opacity="0.2" />
+              <circle cx="306" cy="155" r="1.5" fill="#3a2704" /><circle cx="306" cy="155" r="2.2" fill="#fff" opacity="0.2" />
+              <circle cx="308" cy="130" r="1.5" fill="#3a2704" /><circle cx="308" cy="130" r="2.2" fill="#fff" opacity="0.2" />
+              <circle cx="297" cy="113" r="1.5" fill="#3a2704" /><circle cx="297" cy="113" r="2.2" fill="#fff" opacity="0.2" />
+            </g>
+          </g>
+        </svg>
+      </div>
+    </section>
+  </div>
+
+  <!-- Subtle, Premium Developer Toggle -->
+  <div class="developer-panel">
+    <span class="dev-label">CHRONO DIAL</span>
+    <button class="dev-toggle-btn" id="dev-state-toggle" title="Toggle locked/unlocked state for preview">
+      <span class="toggle-pill"></span>
+      <span class="toggle-text">Preview Unlocked</span>
+    </button>
+  </div>
+
+  <script src="app.js?v=1.0.4"></script>
+</body>
+</html>

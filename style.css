@@ -1,0 +1,603 @@
+/* 
+  Time Capsule - Premium Cinematic CSS 
+  Theme: Obsidian Dark Navy & Luxury Gold
+*/
+
+:root {
+  --color-obsidian: #030408;
+  --color-navy-deep: #070c1b;
+  --color-navy-light: #0d162d;
+  --color-gold-bright: #ffd700;
+  --color-gold-muted: #d4af37;
+  --color-gold-dark: #aa7c11;
+  --color-gold-pale: #fff5b3;
+  --color-text-light: #f3f4f6;
+  --color-text-gray: #9ca3af;
+  
+  --font-serif: 'Cormorant Garamond', 'Cinzel', 'Playfair Display', serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  
+  --glass-bg: rgba(7, 12, 27, 0.45);
+  --glass-border: rgba(212, 175, 55, 0.15);
+  --glass-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 
+                  inset 0 0 20px rgba(212, 175, 55, 0.03);
+}
+
+/* Reset & Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--color-obsidian);
+  color: var(--color-text-light);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Cinematic Sky & Nebulae Backgrounds */
+#sky-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.sky-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.nebula-gold {
+  background: radial-gradient(circle at 75% 25%, rgba(212, 175, 55, 0.06) 0%, transparent 60%);
+}
+
+.nebula-blue {
+  background: radial-gradient(circle at 20% 80%, rgba(41, 128, 185, 0.08) 0%, transparent 60%);
+  mix-blend-mode: screen;
+}
+
+.vignette {
+  background: radial-gradient(circle at 50% 50%, transparent 30%, rgba(3, 4, 8, 0.95) 100%);
+}
+
+/* Screen transition flash overlay */
+#flash-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  opacity: 0;
+  z-index: 999;
+  pointer-events: none;
+  transition: opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+#flash-overlay.active {
+  opacity: 1;
+}
+
+/* App Container */
+#app-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3;
+}
+
+/* Views Setup */
+.view-section {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.98);
+  transition: opacity 1.5s cubic-bezier(0.25, 1, 0.5, 1), 
+              transform 1.5s cubic-bezier(0.25, 1, 0.5, 1),
+              visibility 1.5s;
+}
+
+.view-section.active {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+}
+
+/* 1. COUNTDOWN VIEW STYLING */
+.atmosphere-text-container {
+  overflow: hidden;
+  margin: 1.5rem 0;
+  text-align: center;
+}
+
+.sub-title {
+  font-family: var(--font-serif);
+  font-size: 1.8rem;
+  font-weight: 300;
+  letter-spacing: 0.3em;
+  color: var(--color-gold-pale);
+  text-transform: uppercase;
+  text-shadow: 0 0 15px rgba(255, 245, 179, 0.25);
+  margin-bottom: 0.5rem;
+}
+
+.bottom-quote {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0.1em;
+  color: var(--color-text-gray);
+  text-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+  animation: breathing 4s ease-in-out infinite alternate;
+}
+
+/* Glassmorphism Countdown Card */
+.glass-countdown-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: 24px;
+  padding: 3rem 4rem;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  margin: 2rem 0;
+  transition: border-color 0.5s ease, box-shadow 0.5s ease, transform 0.5s ease;
+}
+
+.glass-countdown-card:hover {
+  border-color: rgba(212, 175, 55, 0.3);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 
+              0 0 30px rgba(212, 175, 55, 0.08),
+              inset 0 0 25px rgba(212, 175, 55, 0.05);
+  transform: translateY(-4px);
+}
+
+.timer-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 110px;
+}
+
+.timer-val {
+  font-family: var(--font-serif);
+  font-size: 4.5rem;
+  font-weight: 300;
+  line-height: 1;
+  color: #fff;
+  background: linear-gradient(135deg, #fff 0%, var(--color-gold-pale) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+  margin-bottom: 0.75rem;
+}
+
+.timer-label {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  color: var(--color-text-gray);
+  text-transform: uppercase;
+}
+
+.timer-divider {
+  font-family: var(--font-serif);
+  font-size: 3.5rem;
+  font-weight: 300;
+  color: rgba(212, 175, 55, 0.4);
+  margin: 0 1.25rem -1rem 1.25rem;
+  line-height: 1;
+  align-self: flex-start;
+  animation: pulse-divider 2s infinite ease-in-out;
+}
+
+/* 2. UNLOCKED VIEW STYLING */
+#unlocked-view {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+#unlocked-content {
+  position: absolute;
+  top: 54%;
+  left: 50%;
+  transform: translate(-50%, -50%) translateY(20px);
+  width: 90%;
+  max-width: 800px;
+  text-align: center;
+  z-index: 5;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 2s cubic-bezier(0.25, 1, 0.5, 1),
+              transform 2s cubic-bezier(0.25, 1, 0.5, 1),
+              visibility 2s;
+}
+
+#unlocked-content.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -50%) translateY(0);
+}
+
+.majestic-reveal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#glow-number-19 {
+  font-family: var(--font-serif);
+  font-size: 11rem;
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(to bottom, #ffffff 30%, var(--color-gold-bright) 70%, var(--color-gold-dark) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.35))
+          drop-shadow(0 0 50px rgba(255, 215, 0, 0.15));
+  animation: majestic-glow 3s ease-in-out infinite alternate;
+}
+
+.cinematic-serif-heading {
+  font-family: var(--font-serif);
+  font-size: 2.2rem;
+  font-weight: 300;
+  letter-spacing: 0.15em;
+  color: var(--color-gold-pale);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8), 0 0 15px rgba(255, 245, 179, 0.15);
+  margin-bottom: 0.75rem;
+}
+
+.cinematic-quote {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0.05em;
+  color: var(--color-text-gray);
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.9);
+}
+
+/* Interactive Chest Container */
+#chest-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 4;
+  transition: top 2.0s cubic-bezier(0.25, 1, 0.3, 1), 
+              transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+#chest-container.opened {
+  top: 76%;
+}
+
+/* Glowing Pulsing Ring Behind Chest */
+.chest-glow-ring {
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.12) 0%, transparent 70%);
+  filter: blur(10px);
+  pointer-events: none;
+  animation: float-glow 6s infinite ease-in-out;
+  transition: background 2s ease, transform 2s ease;
+}
+
+#chest-container:hover .chest-glow-ring {
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.22) 0%, transparent 70%);
+  transform: scale(1.1);
+}
+
+/* Instruction Text Above Chest */
+.chest-instruction {
+  position: absolute;
+  top: -2.5rem;
+  font-family: var(--font-serif);
+  font-size: 0.9rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--color-gold-muted);
+  opacity: 0.6;
+  transition: opacity 0.5s ease, transform 0.5s ease, letter-spacing 0.5s ease;
+  animation: breathing 3s ease-in-out infinite alternate;
+}
+
+#chest-container:hover .chest-instruction {
+  opacity: 1;
+  letter-spacing: 0.3em;
+  transform: scale(1.03);
+}
+
+/* Chest SVG Animations */
+#chest-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+#chest-container:hover #chest-svg {
+  transform: translateY(-8px) rotateX(10deg);
+}
+
+#chest-lid {
+  transform-origin: 200px 160px;
+  transition: transform 2.2s cubic-bezier(0.25, 1, 0.3, 1);
+}
+
+/* When the chest is opened */
+#chest-svg.opened #chest-lid {
+  /* Rotate lid backwards and lift it up in perspective space */
+  transform: translateY(-40px) scaleY(0.25) skewX(-15deg);
+}
+
+#chest-svg.opened #chest-latch {
+  transform: rotate(-110deg);
+  transform-origin: 200px 150px;
+  opacity: 0.05;
+  transition: transform 0.6s ease, opacity 0.6s ease;
+}
+
+/* Lid-dependent internal glow in SVG */
+.lid-dependent-glow {
+  opacity: 0;
+  transform-origin: 200px 180px;
+  transform: scale(0.2);
+  transition: opacity 1.5s ease, transform 2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#chest-svg.opened .lid-dependent-glow {
+  opacity: 1;
+  transform: scale(1.8);
+}
+
+#chest-core-glow {
+  transform-origin: 200px 160px;
+}
+
+/* Chest core glow */
+#chest-svg.opened #chest-core-glow {
+  animation: core-light-flare 3.5s forwards cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Hide instruction when opened */
+#chest-container.opened .chest-instruction {
+  opacity: 0 !important;
+  pointer-events: none;
+  transform: translateY(-10px);
+}
+
+/* Developer Toggle Panel */
+.developer-panel {
+  position: absolute;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.25rem;
+}
+
+.dev-label {
+  font-family: var(--font-sans);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--color-gold-muted);
+  opacity: 0.4;
+}
+
+.dev-toggle-btn {
+  background: rgba(7, 12, 27, 0.6);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: 30px;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.dev-toggle-btn:hover {
+  background: rgba(212, 175, 55, 0.1);
+  border-color: var(--color-gold-muted);
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.15);
+}
+
+.toggle-pill {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--color-gold-muted);
+  box-shadow: 0 0 4px var(--color-gold-bright);
+  transition: all 0.4s ease;
+}
+
+.dev-toggle-btn.unlocked .toggle-pill {
+  background-color: #00ff66;
+  box-shadow: 0 0 8px #00ff66;
+}
+
+.toggle-text {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--color-text-light);
+  text-transform: uppercase;
+}
+
+/* Keyframe Animations */
+@keyframes pulse-divider {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.85; filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.3)); }
+}
+
+@keyframes breathing {
+  0% { opacity: 0.4; }
+  100% { opacity: 0.75; }
+}
+
+@keyframes floating-text {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes float-glow {
+  0%, 100% { transform: scale(1) translateY(0); opacity: 0.8; }
+  50% { transform: scale(1.08) translateY(-8px); opacity: 1; }
+}
+
+@keyframes majestic-glow {
+  0% { filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.2)) drop-shadow(0 0 40px rgba(255, 215, 0, 0.1)); }
+  100% { filter: drop-shadow(0 0 25px rgba(255, 215, 0, 0.45)) drop-shadow(0 0 65px rgba(255, 215, 0, 0.25)); }
+}
+
+@keyframes core-light-flare {
+  0% { transform: scale(0); opacity: 0; }
+  10% { transform: scale(0.3); opacity: 0.95; }
+  100% { transform: scale(1.3); opacity: 1; }
+}
+
+/* Responsive Rules */
+@media (max-width: 768px) {
+  .glass-countdown-card {
+    padding: 2rem 2.5rem;
+    margin: 1.5rem 0;
+  }
+  
+  .timer-unit {
+    min-width: 80px;
+  }
+  
+  .timer-val {
+    font-size: 3.2rem;
+  }
+  
+  .timer-divider {
+    font-size: 2.5rem;
+    margin: 0 0.5rem -0.5rem 0.5rem;
+  }
+  
+  .sub-title {
+    font-size: 1.4rem;
+  }
+  
+  #glow-number-19 {
+    font-size: 8rem;
+  }
+  
+  .cinematic-serif-heading {
+    font-size: 1.7rem;
+  }
+  
+  #chest-container {
+    width: 320px;
+    height: 240px;
+    margin-bottom: 4vh;
+  }
+  
+  .chest-glow-ring {
+    width: 220px;
+    height: 220px;
+  }
+}
+
+@media (max-width: 480px) {
+  .glass-countdown-card {
+    padding: 1.25rem 1rem;
+    border-radius: 16px;
+  }
+  
+  .timer-unit {
+    min-width: 60px;
+  }
+  
+  .timer-val {
+    font-size: 2.2rem;
+  }
+  
+  .timer-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+  }
+  
+  .timer-divider {
+    font-size: 1.8rem;
+    margin: 0 0.25rem -0.3rem 0.25rem;
+  }
+  
+  .sub-title {
+    font-size: 1.1rem;
+    letter-spacing: 0.2em;
+  }
+  
+  .bottom-quote {
+    font-size: 0.9rem;
+  }
+  
+  #glow-number-19 {
+    font-size: 6.5rem;
+  }
+  
+  .cinematic-serif-heading {
+    font-size: 1.35rem;
+    letter-spacing: 0.1em;
+  }
+  
+  .cinematic-quote {
+    font-size: 1rem;
+  }
+  
+  #chest-container {
+    width: 270px;
+    height: 200px;
+  }
+  
+  .chest-glow-ring {
+    width: 180px;
+    height: 180px;
+  }
+}
