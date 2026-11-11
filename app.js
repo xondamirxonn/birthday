@@ -7,8 +7,8 @@
 /* ---------- Settings (edit these) ---------- */
 const CONFIG = {
   name: 'Khondamir',
-  age: 19,
-  unlockDate: new Date(2026, 5, 14, 0, 0, 0), // month is 0-indexed: 5 = June
+  age: 20,
+  unlockDate: new Date(2027, 5, 14, 0, 0, 0), // month is 0-indexed: 5 = June
 };
 //for deploy
 /* Hidden preview for testing (no visible UI):
