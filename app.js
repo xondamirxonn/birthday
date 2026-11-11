@@ -10,7 +10,7 @@ const CONFIG = {
   age: 19,
   unlockDate: new Date(2026, 5, 14, 0, 0, 0), // month is 0-indexed: 5 = June
 };
-
+//for deploy
 /* Hidden preview for testing (no visible UI):
    add ?preview=countdown to the URL to see the countdown unlock after 10 seconds. */
 const params = new URLSearchParams(location.search);
