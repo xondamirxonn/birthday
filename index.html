@@ -3,81 +3,145 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#030408">
   <title>Happy Birthday, Khondamir!</title>
-  <!-- SEO & Description -->
   <meta name="description" content="19 years of memories. A story hidden in time. Click to discover">
-  <!-- Premium Fonts -->
+  <meta property="og:title" content="Happy Birthday, Khondamir!">
+  <meta property="og:description" content="19 years of memories. A story hidden in time. Click to discover">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎁</text></svg>">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700;900&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,500;0,700;1,400&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,500;0,700;1,400&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=1.0.4">
+  <link rel="stylesheet" href="style.css?v=2.0.0">
 </head>
 
 <body>
-  <!-- Cinematic Canvas for Stars, Nebulae, and Glowing Particles -->
-  <canvas id="sky-canvas"></canvas>
+  <!-- Stars, gold dust, the "19" and fireworks are all drawn here -->
+  <canvas id="sky-canvas" aria-hidden="true"></canvas>
 
-  <!-- Ambient Cinematic Atmosphere Overlays -->
-  <div class="sky-overlay nebula-gold"></div>
-  <div class="sky-overlay nebula-blue"></div>
-  <div class="sky-overlay vignette"></div>
+  <div class="sky-overlay nebula-gold" aria-hidden="true"></div>
+  <div class="sky-overlay nebula-blue" aria-hidden="true"></div>
+  <div class="sky-overlay vignette" aria-hidden="true"></div>
+  <div id="flash-overlay" aria-hidden="true"></div>
 
-  <!-- Screen transition overlays -->
-  <div id="flash-overlay"></div>
+  <!-- Sound toggle -->
+  <div class="top-controls">
+    <button id="sound-toggle" class="icon-btn" type="button" aria-pressed="true" aria-label="Mute sound"
+      title="Sound on">
+      <svg class="icon-sound-on" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M11 5 6 9H3v6h3l5 4V5Z" />
+        <path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13" />
+      </svg>
+      <svg class="icon-sound-off" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M11 5 6 9H3v6h3l5 4V5Z" />
+        <path d="m22 9-6 6M16 9l6 6" />
+      </svg>
+    </button>
+  </div>
 
-  <div id="app-container">
-    <!-- 1. COUNTDOWN STATE (Locked) -->
-    <section id="countdown-view" class="view-section active">
-      <div class="atmosphere-text-container">
-        <h2 class="sub-title text-reveal">A story hidden in time</h2>
+  <main id="app-container">
+    <!-- 1. COUNTDOWN (locked) -->
+    <section id="countdown-view" class="view-section" aria-labelledby="countdown-title">
+      <p class="eyebrow reveal-up" style="--d:0">A time capsule for Khondamir</p>
+      <h1 id="countdown-title" class="sub-title reveal-up" style="--d:1">A story hidden in time</h1>
+
+      <div class="glass-countdown-card reveal-up" style="--d:2" role="timer" id="countdown-card">
+        <div class="timer-unit">
+          <div class="timer-val-wrap"><span class="timer-val" data-unit="days">00</span></div>
+          <span class="timer-label">Days</span>
+        </div>
+        <div class="timer-divider" aria-hidden="true">:</div>
+        <div class="timer-unit">
+          <div class="timer-val-wrap"><span class="timer-val" data-unit="hours">00</span></div>
+          <span class="timer-label">Hours</span>
+        </div>
+        <div class="timer-divider" aria-hidden="true">:</div>
+        <div class="timer-unit">
+          <div class="timer-val-wrap"><span class="timer-val" data-unit="minutes">00</span></div>
+          <span class="timer-label">Minutes</span>
+        </div>
+        <div class="timer-divider" aria-hidden="true">:</div>
+        <div class="timer-unit">
+          <div class="timer-val-wrap"><span class="timer-val" data-unit="seconds">00</span></div>
+          <span class="timer-label">Seconds</span>
+        </div>
       </div>
 
-      <div class="glass-countdown-card">
-        <div class="timer-unit" id="unit-days">
-          <span class="timer-val">00</span>
-          <span class="timer-label">DAYS</span>
+      <div class="progress reveal-up" style="--d:3">
+        <div class="progress-track" role="progressbar" aria-label="Time until the capsule opens" aria-valuemin="0"
+          aria-valuemax="100" id="progress-track">
+          <div class="progress-fill" id="progress-fill"></div>
         </div>
-        <div class="timer-divider">:</div>
-        <div class="timer-unit" id="unit-hours">
-          <span class="timer-val">00</span>
-          <span class="timer-label">HOURS</span>
-        </div>
-        <div class="timer-divider">:</div>
-        <div class="timer-unit" id="unit-minutes">
-          <span class="timer-val">00</span>
-          <span class="timer-label">MINUTES</span>
-        </div>
-        <div class="timer-divider">:</div>
-        <div class="timer-unit" id="unit-seconds">
-          <span class="timer-val">00</span>
-          <span class="timer-label">SECONDS</span>
+        <div class="progress-meta">
+          <span id="progress-label">Counting…</span>
+          <span>Opens June 14</span>
         </div>
       </div>
 
-      <div class="atmosphere-text-container">
-        <p class="bottom-quote text-reveal">Every second brings June 14 closer.</p>
-      </div>
+      <p class="bottom-quote reveal-up" style="--d:4">Every second brings June 14 closer.</p>
     </section>
 
-    <!-- 2. UNLOCKED STATE (June 14) -->
-    <section id="unlocked-view" class="view-section">
-      <!-- Magical Glowing Content after chest opens -->
-      <div id="unlocked-content" class="hidden">
-        <div class="majestic-reveal">
-          <h2 class="cinematic-serif-heading">Nineteen years of memories.</h2>
-          <p class="cinematic-quote">And the best chapters may still be ahead.</p>
+    <!-- 2. UNLOCKED (June 14 and after) -->
+    <section id="unlocked-view" class="view-section" aria-label="Birthday capsule">
+      <div class="reveal-stage">
+        <!-- The particle "19" forms inside this box -->
+        <div id="number-slot" aria-hidden="true"></div>
+
+        <div id="unlocked-content">
+          <h1 class="cinematic-name" style="--i:0">Happy Birthday, <span class="gold-text">Khondamir</span></h1>
+          <p class="cinematic-serif-heading" style="--i:1">Nineteen years of memories.</p>
+          <p class="cinematic-quote" style="--i:2">And the best chapters may still be ahead.</p>
+
+          <div class="actions" style="--i:3">
+            <button class="btn btn-primary" id="open-letter" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="3" y="5" width="18" height="14" rx="2" />
+                <path d="m3 7 9 6 9-6" />
+              </svg>
+              Read your letter
+            </button>
+            <button class="btn btn-ghost" id="make-wish" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1" />
+              </svg>
+              Make a wish
+            </button>
+          </div>
+
+          <div class="mini-actions" style="--i:4">
+            <button class="link-btn" id="replay-btn" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M3 12a9 9 0 1 0 3-6.7L3 8" />
+                <path d="M3 3v5h5" />
+              </svg>
+              Replay
+            </button>
+            <span class="dot" aria-hidden="true">·</span>
+            <button class="link-btn" id="share-btn" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7M16 6l-4-4-4 4M12 2v13" />
+              </svg>
+              Share
+            </button>
+          </div>
         </div>
       </div>
 
-      <!-- Mysterious Interactive Chest Container -->
-      <div id="chest-container">
-        <div class="chest-glow-ring"></div>
-        <div class="chest-instruction">Click to open the capsule</div>
+      <button id="chest-container" type="button" aria-label="Open the time capsule">
+        <span class="chest-glow-ring" aria-hidden="true"></span>
+        <span class="chest-instruction" aria-hidden="true">
+          <span class="hint-mouse">Click to open the capsule</span>
+          <span class="hint-touch">Tap to open the capsule</span>
+          <svg class="hint-chevron" viewBox="0 0 24 24">
+            <path d="m6 9 6 6 6-6" />
+          </svg>
+        </span>
 
-        <!-- Premium SVG Treasure Chest -->
         <svg id="chest-svg" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <!-- Gold Metallic Gradient -->
@@ -222,11 +286,69 @@
             </g>
           </g>
         </svg>
-      </div>
+      </button>
     </section>
-  </div>
+  </main>
 
-  <script src="app.js?v=1.0.5"></script>
+  <!-- Letter -->
+  <dialog id="letter-dialog" class="glass-dialog" aria-labelledby="letter-title">
+    <div class="dialog-inner">
+      <button class="icon-btn dialog-close" type="button" aria-label="Close letter" data-close>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6 6l12 12M18 6 6 18" />
+        </svg>
+      </button>
+
+      <article class="letter">
+        <div class="seal" aria-hidden="true" style="--i:0">K</div>
+        <p class="eyebrow" style="--i:1">June 14 · A letter for you</p>
+        <h2 id="letter-title" style="--i:2">Dear Khondamir,</h2>
+        <p class="first" style="--i:3">Nineteen years ago today, the world got a little brighter, and it has been getting
+          brighter ever since.</p>
+        <p style="--i:4">This capsule kept one quiet promise until this moment: to remind you how far you have come.
+          Every late night, every small win, every lesson you never asked for has shaped the person reading this.</p>
+        <p style="--i:5">Nineteen is a doorway. Walk through it with curiosity. Be brave with your dreams, gentle with
+          yourself, and generous with the people who love you.</p>
+        <p style="--i:6">Whatever this year holds, I hope it surprises you in the best ways.</p>
+        <p class="signature" style="--i:7">Happy birthday ✨<br><span>With love, always in your corner.</span></p>
+      </article>
+    </div>
+  </dialog>
+
+  <!-- Make a wish -->
+  <dialog id="wish-dialog" class="glass-dialog wish-dialog" aria-labelledby="wish-title">
+    <div class="dialog-inner">
+      <button class="icon-btn dialog-close" type="button" aria-label="Close" data-close>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6 6l12 12M18 6 6 18" />
+        </svg>
+      </button>
+
+      <div class="wish-body">
+        <h2 id="wish-title">Close your eyes…</h2>
+        <p id="wish-text">Take a deep breath and make a wish.</p>
+
+        <div class="cake">
+          <button class="candle" id="candle" type="button" aria-label="Blow out the candle" disabled>
+            <span class="flame" aria-hidden="true"></span>
+            <span class="smoke" aria-hidden="true"></span>
+            <span class="smoke s2" aria-hidden="true"></span>
+          </button>
+          <div class="tier tier-top" aria-hidden="true"></div>
+          <div class="tier tier-bottom" aria-hidden="true"></div>
+          <div class="plate" aria-hidden="true"></div>
+        </div>
+
+        <div class="wish-progress" aria-hidden="true"><span id="wish-progress-fill"></span></div>
+        <p class="wish-hint" id="wish-hint" aria-live="polite">Hold that wish in your heart…</p>
+      </div>
+    </div>
+  </dialog>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+  <div id="announcer" class="sr-only" aria-live="polite"></div>
+
+  <script src="app.js?v=2.0.0"></script>
 </body>
 
 </html>
